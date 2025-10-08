@@ -4,6 +4,7 @@ from xml.sax.xmlreader import Locator
 from playwright.sync_api import Page, ElementHandle,expect
 from pagesPOM.base_page import Base
 from playwright.sync_api import Locator
+from Util.common_functions import CommonFunctions
 
 
 class register_feature_component(Base):
@@ -11,8 +12,7 @@ class register_feature_component(Base):
     def __init__(self, page:Page):
         self.page = page
         self.iframe=page.frame_locator("#iframe-BLZ00000001004")
-        self.random_suffix=uuid.uuid4().hex[:6]
-        self.feature_title=f"feature mod component_{self.random_suffix}"
+
     @property
     def title_input(self)-> ElementHandle:
         return self.iframe.locator('//*[@id="component-title"]')
@@ -80,7 +80,8 @@ class register_feature_component(Base):
 
     @property
     def registed_components(self)-> ElementHandle:
-        return self.iframe.locator(f'(//*[@title="{self.feature_title}"])[1]')
+        common_function1 = CommonFunctions(self.page)
+        return self.iframe.locator(f'(//*[@title="{common_function1.feature_title}"])[1]')
 
 
 
