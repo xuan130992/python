@@ -47,16 +47,16 @@ class register_component(Base):
     def register_component_option(self)->ElementHandle:
         return self.iframe.locator('//*[contains(text(),"Please select the type of component to register.")]')
 
-    @property
-    def select_feature_mod(self)->ElementHandle:
-        return self.iframe.locator('//*[contains(text(),"Featured Mod")]')
+
+    def select_feature_mod(self,component_type:str)->ElementHandle:
+        return self.iframe.locator(f'//*[@class="py-8 px-24 rounded-br-10 rounded-tl-10 w-auto bg-black color-white inline-block text-18" and text()="{component_type}"]')
 
     @property
     def register_form(self)->ElementHandle:
         return self.iframe.locator('//*[contains(text(),"Basic Information")]')
 
 
-    def register_component_act(self,country):
+    def register_component_act(self,country,component_type:str):
         self.bubblely_menu.click()
         self.official_homepage_menu.click()
         self.page_component.click()
@@ -64,7 +64,7 @@ class register_component(Base):
         self.input_country.fill(country)
         self.select_country_details.click()
         self.register_btn.click()
-        self.select_feature_mod.click()
+        self.select_feature_mod(component_type).click()
 
 
 

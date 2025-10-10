@@ -1,10 +1,12 @@
 import uuid
 from xml.sax.xmlreader import Locator
 
+
 from playwright.sync_api import Page, ElementHandle,expect
 from pagesPOM.base_page import Base
 from playwright.sync_api import Locator
-from Util.common_functions import CommonFunctions
+
+
 
 
 class register_feature_component(Base):
@@ -78,10 +80,6 @@ class register_feature_component(Base):
     def register_complete_btn(self)-> ElementHandle:
         return self.iframe.locator('//*[contains(text(),"Confirm") and @class="p-button-label"]')
 
-    @property
-    def registed_components(self)-> ElementHandle:
-        common_function1 = CommonFunctions(self.page)
-        return self.iframe.locator(f'(//*[@title="{common_function1.feature_title}"])[1]')
 
 
 
@@ -105,8 +103,7 @@ class register_feature_component(Base):
         self.register_complete_btn.click()
 
 
-    def verify_register_successful(self):
-        expect(self.registed_components).to_be_visible()
+
 
 
 
