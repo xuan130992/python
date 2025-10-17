@@ -8,6 +8,5 @@ def test_login_success(page: Page):
 
     partner_page1= partner_page(page)
     login_page.login(username='lexuan.vn@smilegate.com', password='Hoilamgi123!')
-    context.storage_state(path="login_state.json")
     partner_page1.verify_login_success()
     print('Login Success')

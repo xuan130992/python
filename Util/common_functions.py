@@ -1,5 +1,6 @@
 from playwright.sync_api import Page,expect, ElementHandle
 
+
 from Util import common_locator
 from pagesPOM.base_page import Base
 from Util.common_locator import CommonLocator
@@ -11,6 +12,7 @@ class CommonFunctions(Base):
         self.page = page
         self.iframe = page.frame_locator("#iframe-BLZ00000001004")
 
+
     def upload_image(self, upload_locator:str, filepath:str):
         print("Upload thành công.")
         with self.page.expect_file_chooser() as fc_info:
@@ -21,5 +23,19 @@ class CommonFunctions(Base):
     def verify_register_successful(self,common_locator: CommonLocator):
         expect(common_locator.registed_components).to_be_visible()
 
-    def verify_display(self,common_locator: CommonLocator):
+    def verify_banner_display(self,common_locator: CommonLocator):
         expect(common_locator.component_title).to_be_visible()
+
+    def verify_mod_displayed(self,common_type: str,common_locator: CommonLocator):
+        if common_type == "Featured Mod":
+            expect(common_locator.feature_title_en).to_be_visible()
+        elif common_type == "Normal":
+            expect(common_locator.normal_title_en).to_be_visible()
+        elif common_type == "Ranking":
+            expect(common_locator.ranking_title_en).to_be_visible()
+        elif common_type == "Highlight":
+            expect(common_locator.highlight_title_en).to_be_visible()
+
+
+
+
