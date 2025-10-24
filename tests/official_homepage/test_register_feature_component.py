@@ -11,8 +11,11 @@ from pagesPOM.bubblely.Official_homepage.register_component import register_comp
 from pagesPOM.login_page import LoginPage
 from pagesPOM.bubblely.Official_homepage.register_feature_component_page import register_feature_component
 from pagesPOM.bubblely.main_page.main_display_page import main_display_page
+import os
+from config_pack.environment import EnvConfig
 
-def test_register_feature_component_successful(page:Page):
+def test_register_feature_component_successful(load_env,page:Page):
+    os.makedirs("auth",exist_ok=True)
     page.context.storage_state(path="auth/storage_state.json")
     login_page = LoginPage(page)
     register_component1 = register_component(page)
@@ -20,12 +23,13 @@ def test_register_feature_component_successful(page:Page):
     common_locator = CommonLocator(page)
     common_functions = CommonFunctions(page)
     main_display_page1 = main_display_page(page)
-    page.goto("https://partners-qa.onstove.com/main")
+    env= EnvConfig
+    page.goto(f"{env.BASE_URL}/main")
     #login_page.login(username='lexuan.vn@smilegate.com', password='Hoilamgi123!')
     register_component1.register_component_act("korea","Featured Mod")
     register_feature_component1.register_feature_component(common_locator.feature_title,"0",common_locator.EN_feature_title)
     common_functions.verify_register_successful(common_locator)
-    main_display_page1.open_mainpage()
+    main_display_page1.open_mainpage(load_env)
     page.wait_for_timeout(5000)
     common_functions.verify_mod_displayed(common_locator.EN_feature_title,common_locator)
     page.wait_for_timeout(2000)
