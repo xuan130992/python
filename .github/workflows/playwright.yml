@@ -2,7 +2,7 @@ name:  Playwright Tests (Windows)
 
 on:
   schedule:
-    - cron: "0 23 * * *"     # 6:00 AM giờ Việt Nam (UTC+7 = 23:00 UTC hôm trước)
+    - cron: "45 9 * * *"     # 6:00 AM giờ Việt Nam (UTC+7 = 23:00 UTC hôm trước)
   push:
     branches: [ "main" ]
   pull_request:
