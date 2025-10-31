@@ -63,12 +63,12 @@ def pytest_runtest_makereport(item, call):
 
         try:
             page.screenshot(path=screenshot_path)
-            print(f"📸 Screenshot saved to: {screenshot_path}")
+            print(f" Screenshot saved to: {screenshot_path}")
         except Exception as e:
-            print(f"⚠️ Failed to take screenshot: {e}")
+            print(f" Failed to take screenshot: {e}")
             return
 
-        # ✅ Gắn hình vào report dưới dạng base64 (để nhúng thẳng vào HTML)
+        #  Gắn hình vào report dưới dạng base64 (để nhúng thẳng vào HTML)
         if item.config.pluginmanager.hasplugin("pytest_html"):
             with open(screenshot_path, "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
@@ -81,18 +81,18 @@ def pytest_runtest_makereport(item, call):
                f'style="width:400px;height:auto;" alt="screenshot"></div>'
             })
             rep.extra = extra
-            print(f"✅ rep.extra length: {len(extra)}")
+
 
 
 @pytest.hookimpl(optionalhook=True)
 def pytest_html_results_table_row(report, cells):
     """Thêm biểu tượng cho pass/fail/skipped trong report HTML"""
     if report.passed:
-        status_icon = '<div class="passed">✅</div>'
+        status_icon = '<div class="passed">PASSED</div>'
     elif report.failed:
-        status_icon = '<div class="failed">❌</div>'
+        status_icon = '<div class="failed">FAILED</div>'
     else:
-        status_icon = '<div class="skipped">⚠️</div>'
+        status_icon = '<div class="skipped">SKIPPED</div>'
 
     if len(cells) > 1:
         cells.insert(1, status_icon)
