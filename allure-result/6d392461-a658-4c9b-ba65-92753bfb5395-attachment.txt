@@ -1,0 +1,8 @@
+
+ Loading env: .env.qa
+bat dau run
+run on ENV  <property object at 0x00000238919DC1D0>
+user name la lexuan.vn@smilegate.com
+password la Hoilamgi123!
+Saving storage state...
+Saved successfully.

@@ -1,18 +1,19 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,Page
 from config_pack.environment import EnvConfig
 import config_pack.environment
 from pagesPOM.login_page import LoginPage
 from dotenv import load_dotenv
 import os
 
-def test_save_login_state(load_env):
+def test_save_login_state(load_env, request):
     os.makedirs("auth", exist_ok=True)
     env= EnvConfig()
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False,slow_mo=500)
         context = browser.new_context()
         page = context.new_page()
-
+        request.node.page = page
         print("bat dau run")
         login_page = LoginPage(page)
         login_page.login(username=env.USERNAME, password=env.PASSWORD)
@@ -26,5 +27,5 @@ def test_save_login_state(load_env):
         print("Saved successfully.")
 
 
-        browser.close()
+
 

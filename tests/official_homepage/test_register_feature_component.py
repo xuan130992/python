@@ -23,7 +23,7 @@ def test_register_feature_component_successful(load_env,page:Page):
     common_locator = CommonLocator(page)
     common_functions = CommonFunctions(page)
     main_display_page1 = main_display_page(page)
-    env= EnvConfig
+    env= EnvConfig()
     page.goto(f"{env.BASE_URL}/main")
     #login_page.login(username='lexuan.vn@smilegate.com', password='Hoilamgi123!')
     register_component1.register_component_act("korea","Featured Mod")

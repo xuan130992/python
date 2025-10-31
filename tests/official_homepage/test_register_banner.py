@@ -13,7 +13,7 @@ from config_pack.environment import EnvConfig
 import os
 from dotenv import load_dotenv
 
-def test_register_banner_successful(load_env,page:Page):
+def test_register_banner_successful(load_env,page:Page,request):
     os.makedirs("auth", exist_ok=True)
     page.context.storage_state(path="auth/storage_state.json")
     login_page1 = LoginPage(page)
@@ -23,7 +23,8 @@ def test_register_banner_successful(load_env,page:Page):
     common_functions = CommonFunctions(page)
     main_display_page1 = main_display_page(page)
     env=EnvConfig()
-    login_page1.login(username='lexuan.vn@smilegate.com', password='Hoilamgi123!')
+    #login_page1.login(username='lexuan.vn@smilegate.com', password='Hoilamgi123!')
+    request.node.page = page
     page.goto(f"{env.BASE_URL}/main")
     print("Current URL:", page.url)
     register_component1.register_component_act("korea","Banner")

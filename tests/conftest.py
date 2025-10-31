@@ -2,6 +2,10 @@ import os
 
 import pytest
 from dotenv import load_dotenv
+from datetime import datetime
+from pytest_html import extras
+import base64
+
 
 from config_pack.environment import EnvConfig
 
@@ -36,3 +40,73 @@ def load_env(request):
         raise FileNotFoundError(f"env file not found: {dotenv_file}")
     return EnvConfig()
 
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    # Lấy kết quả test
+    outcome = yield
+    rep = outcome.get_result()
+
+    # Chỉ chụp hình khi test fail
+    if rep.when == "call" and rep.failed:
+        page = getattr(item, "page", None)
+        if not page:
+            return
+
+        # Tạo folder screenshots
+        screenshot_dir = os.path.join(os.getcwd(), "screenshots")
+        os.makedirs(screenshot_dir, exist_ok=True)
+
+        # Tên file có timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        screenshot_path = os.path.join(screenshot_dir, f"{item.name}_{timestamp}.png")
+
+        try:
+            page.screenshot(path=screenshot_path)
+            print(f"📸 Screenshot saved to: {screenshot_path}")
+        except Exception as e:
+            print(f"⚠️ Failed to take screenshot: {e}")
+            return
+
+        # ✅ Gắn hình vào report dưới dạng base64 (để nhúng thẳng vào HTML)
+        if item.config.pluginmanager.hasplugin("pytest_html"):
+            with open(screenshot_path, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
+            from pytest_html import extras
+            extra = getattr(rep, "extra", [])
+            extra.append({
+                "name": "Screenshot",
+                "format": "html",
+                "content": f'<div><img src="data:image/png;base64,{encoded_string}" '
+               f'style="width:400px;height:auto;" alt="screenshot"></div>'
+            })
+            rep.extra = extra
+            print(f"✅ rep.extra length: {len(extra)}")
+
+
+@pytest.hookimpl(optionalhook=True)
+def pytest_html_results_table_row(report, cells):
+    """Thêm biểu tượng cho pass/fail/skipped trong report HTML"""
+    if report.passed:
+        status_icon = '<div class="passed">✅</div>'
+    elif report.failed:
+        status_icon = '<div class="failed">❌</div>'
+    else:
+        status_icon = '<div class="skipped">⚠️</div>'
+
+    if len(cells) > 1:
+        cells.insert(1, status_icon)
+    else:
+        cells.append(status_icon)
+
+@pytest.hookimpl(optionalhook=True)
+def pytest_html_results_table_header(cells):
+    cells.insert(1, '<th>Status</th>')
+
+@pytest.hookimpl(optionalhook=True)
+def pytest_html_results_table_html(report, data):
+    """Gắn screenshot vào vùng chi tiết trong report HTML"""
+    if hasattr(report, "extra"):
+        for extra in report.extra:
+            if extra.get("format") == "html":
+                data.append(extra["content"])

@@ -14,6 +14,7 @@ class register_component(Base):
 
     @property
     def official_homepage_menu(self)-> ElementHandle:
+
         return self.page.locator('//*[contains(text(),"Official Homepage Management")]')
 
     @property

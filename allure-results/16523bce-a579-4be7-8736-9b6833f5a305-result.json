@@ -1,0 +1,1 @@
+{"name": "test_login_tc_01[chromium]", "status": "skipped", "parameters": [{"name": "browser_name", "value": "'chromium'"}], "start": 1761822337616, "stop": 1761822337616, "uuid": "2dda85eb-9e65-41ef-8726-32ab2a6b303d", "testCaseId": "e3b7b23fdc7f470c51ec8d9f57beebd5", "fullName": "pages.test_page#test_login_tc_01", "titlePath": ["pages", "test_page.py"]}
