@@ -9,7 +9,7 @@ from playwright.sync_api import Locator
 
 
 
-class register_feature_component(Base):
+class register_Mod_component(Base):
 
     def __init__(self, page:Page):
         self.page = page
@@ -38,6 +38,10 @@ class register_feature_component(Base):
     @property
     def en_language_component_title(self)-> ElementHandle:
         return self.iframe.locator('//*[@id="component-title-en"]')
+
+    @property
+    def set_aggregation_period(self)-> ElementHandle:
+        return self.iframe.locator('//*[contains(text(),"Entire")]')
 
     @property
     def mod_register_btn(self)-> ElementHandle:
@@ -83,7 +87,6 @@ class register_feature_component(Base):
 
 
 
-
     def register_feature_component(self,title,display_order,EN_title) -> None:
         self.title_input.fill(title)
         self.display_options.check()
@@ -94,6 +97,22 @@ class register_feature_component(Base):
         self.mod_type_btn.click()
 
         #self.mod_type_select.wait_for(state="visible", timeout=5000)
+        self.mod_type_select.click()
+        self.search_mod_btn.click()
+        self.mod_checkbox.click()
+        self.registe_mod_btn.click()
+        self.register_scs_confirm.click()
+        self.register_btn.click()
+        self.register_complete_btn.click()
+
+    def register_ranking_component(self,title,display_order,En_title) -> None:
+        self.title_input.fill(title)
+        self.display_options.check()
+        self.display_order.fill(display_order)
+        self.en_language_component_title.fill(En_title)
+        self.set_aggregation_period.click()
+        self.mod_register_btn.click()
+        self.mod_type_btn.click()
         self.mod_type_select.click()
         self.search_mod_btn.click()
         self.mod_checkbox.click()

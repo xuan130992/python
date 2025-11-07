@@ -20,11 +20,11 @@ class CommonFunctions(Base):
              file_chooser=  fc_info.value
              file_chooser.set_files(filepath)
 
-    def verify_register_successful(self,common_locator: CommonLocator):
-        expect(common_locator.registed_components).to_be_visible()
+    def verify_register_successful(self,common_locator: CommonLocator,component_type: str):
+        expect(common_locator.registed_components(component_type)).to_be_visible()
 
-    def verify_banner_display(self,common_locator: CommonLocator):
-        expect(common_locator.component_title).to_be_visible()
+    def verify_banner_display(self,common_locator: CommonLocator,component_type: str):
+        expect(common_locator.component_title(component_type)).to_be_visible()
 
     def verify_mod_displayed(self,common_type: str,common_locator: CommonLocator):
         if common_type == "Featured Mod":

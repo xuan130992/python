@@ -28,12 +28,12 @@ def test_register_banner_successful(load_env,page:Page,request):
     page.goto(f"{env.BASE_URL}/main")
     print("Current URL:", page.url)
     register_component1.register_component_act("korea","Banner")
-    register_banner_page1.register_banner_component(common_locator.feature_title,"0","https://accounts.gate8.com/")
+    register_banner_page1.register_banner_component(common_locator.Banner_title,"0","https://accounts.gate8.com/")
     common_functions.upload_image("xpath=(//*[contains(text(),'Upload')])[1]","./resourse/banner_images/png_1300x325.png")
     common_functions.upload_image("xpath=(//*[contains(text(),'Upload')])[2]","./resourse/banner_images/png_1138x210.png")
     register_banner_page1.register_btn_act()
-    common_functions.verify_register_successful(common_locator)
+    common_functions.verify_register_successful(common_locator,"Banner")
     main_display_page1.open_mainpage(load_env)
-    common_functions.verify_banner_display(common_locator)
+    common_functions.verify_banner_display(common_locator,"Banner")
 
 
