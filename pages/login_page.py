@@ -11,6 +11,8 @@ class LoginPage:
         self.password_input=self.page.locator("//input[@id='user_pwd']")
         self.login2_btn= self.page.locator("//*[@id='btn-login']")
         self.alert_sms= self.page.locator("//*[text()='Check your ID or password.']")
+    def goto_baseurl (self):
+        self.page.goto("https://partners-qa.onstove.com/")
 
     def login(self, username, password):
         self.login1_btn.click()
