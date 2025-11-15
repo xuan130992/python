@@ -2,8 +2,10 @@ from pytest_bdd import scenarios, parsers, parsers, given, when, then
 import pytest
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
+from pathlib import Path
 
-scenarios("../features/test_feature.feature")
+
+scenarios(str(Path(__file__).parent.parent / "features" / "test_feature.feature"))
 @pytest.fixture()
 def login_page(page:Page):
     return LoginPage(page)

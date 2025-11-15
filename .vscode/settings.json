@@ -1,0 +1,14 @@
+{
+    "cucumberautocomplete.steps": [
+    "./tests1/steps/**/*.py"
+],
+"cucumberautocomplete.syncfeatures": "./tests1/features/**/*.feature",
+"cucumberautocomplete.strictGherkinCompletion": true,
+"cucumberautocomplete.smartSnippets": true,
+"cucumberautocomplete.stepsInvariants": true,
+"cucumberautocomplete.skipDocStringsFormat": true,
+"editor.quickSuggestions": {
+    "strings": true
+},
+"cucumberautocomplete.onTypeFormat": true
+}
